@@ -8,11 +8,15 @@ import logging
 from typing import Optional, Dict, Any
 from dotenv import load_dotenv
 from dashscope import SpeechSynthesizer
+import dashscope
 import base64
 import io
 
 # 加载环境变量
 load_dotenv('config.env.example')
+
+# 设置API密钥
+dashscope.api_key = os.getenv('DASHSCOPE_API_KEY')
 
 # 配置日志
 logging.basicConfig(level=logging.INFO)
@@ -113,18 +117,17 @@ class QwenTTSService:
             logger.info(f"开始合成语音: 文本长度={len(text)}, 音色={voice}, 预估成本={cost}元")
             
             # 调用TTS API
-            response = TextToSpeech.call(
+            response = SpeechSynthesizer.call(
                 model=self.default_config['model'],
                 text=text,
-                voice=voice,
                 format=format,
                 sample_rate=sample_rate,
-                speed=speed,
-                volume=volume,
+                rate=speed,
+                volume=int(volume * 50),  # 转换为0-100范围
                 pitch=pitch
             )
             
-            if response.status_code == 200:
+            if response.get_response().status_code == 200:
                 # 获取音频数据
                 audio_data = response.get_audio_data()
                 
@@ -146,7 +149,7 @@ class QwenTTSService:
                 return result
                 
             else:
-                error_msg = f"TTS API调用失败: {response.status_code} - {response.message}"
+                error_msg = f"TTS API调用失败: {response.get_response().status_code} - {response.get_response().text}"
                 logger.error(error_msg)
                 return {
                     'success': False,
