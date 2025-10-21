@@ -13,7 +13,7 @@ import base64
 import io
 
 # 加载环境变量
-load_dotenv('config.env.example')
+load_dotenv('config.env')
 
 # 设置API密钥
 dashscope.api_key = os.getenv('DASHSCOPE_API_KEY')
@@ -32,24 +32,24 @@ class QwenTTSService:
         if not self.api_key:
             raise ValueError("请设置DASHSCOPE_API_KEY环境变量")
         
-        # Qwen3-TTS支持的英文音色
+        # Qwen-TTS支持的英文音色
         self.english_voices = {
-            'jennifer': 'Jennifer',  # 品牌级、电影质感般美语女声
-            'ryan': 'Ryan',          # 节奏拉满，戏感炸裂
-            'katerina': 'Katerina',  # 御姐音色，韵律回味十足
-            'elias': 'Elias',        # 学科严谨性，叙事技巧
-            'cherry': 'Cherry',      # 阳光积极、亲切自然小姐姐
-            'serena': 'Serena',      # 温柔小姐姐
-            'ethan': 'Ethan',        # 标准普通话，带部分北方口音
-            'chelsie': 'Chelsie',    # 二次元虚拟女友
+            'jennifer': 'Jennifer',      # 品牌级、电影质感般美语女声
+            'ryan': 'Ryan',              # 节奏拉满，戏感炸裂
+            'katerina': 'Katerina',      # 御姐音色，韵律回味十足
+            'elias': 'Elias',            # 学科严谨性，叙事技巧
+            'cherry': 'Cherry',          # 阳光积极、亲切自然小姐姐
+            'serena': 'Serena',          # 温柔小姐姐
+            'ethan': 'Ethan',            # 标准普通话，带部分北方口音
+            'chelsie': 'Chelsie',        # 二次元虚拟女友
         }
         
         # 默认配置
         self.default_config = {
-            'model': 'qwen3-tts-flash',
+            'model': 'sambert-zhichu-v1',
             'format': 'wav',
             'sample_rate': 22050,
-            'voice': 'Jennifer',  # 默认使用Jennifer音色
+            'voice': 'Jennifer',  # 默认使用Jennifer英文女声
             'speed': 1.0,
             'volume': 1.0,
             'pitch': 1.0
@@ -121,10 +121,7 @@ class QwenTTSService:
                 model=self.default_config['model'],
                 text=text,
                 format=format,
-                sample_rate=sample_rate,
-                rate=speed,
-                volume=int(volume * 50),  # 转换为0-100范围
-                pitch=pitch
+                sample_rate=sample_rate
             )
             
             if response.get_response().status_code == 200:
