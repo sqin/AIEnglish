@@ -7,7 +7,7 @@ import os
 import logging
 from typing import Optional, Dict, Any
 from dotenv import load_dotenv
-from dashscope import TextToSpeech
+from dashscope import SpeechSynthesizer
 import base64
 import io
 
