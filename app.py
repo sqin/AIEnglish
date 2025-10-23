@@ -33,6 +33,67 @@ def health_check():
     })
 
 
+@app.route('/api/models', methods=['GET'])
+def get_models():
+    """获取可用的模型列表"""
+    try:
+        models = tts_service.get_available_models()
+        current_model = tts_service.get_current_model_info()
+        return jsonify({
+            'success': True,
+            'models': models,
+            'current_model': current_model
+        })
+    except Exception as e:
+        logger.error(f"获取模型列表失败: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'获取模型列表失败: {e}'
+        }), 500
+
+
+@app.route('/api/models/<model_name>', methods=['POST'])
+def switch_model(model_name):
+    """切换TTS模型"""
+    try:
+        success = tts_service.switch_model(model_name)
+        if success:
+            current_model = tts_service.get_current_model_info()
+            return jsonify({
+                'success': True,
+                'message': f'已切换到模型: {model_name}',
+                'current_model': current_model
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': f'切换模型失败: {model_name}'
+            }), 400
+    except Exception as e:
+        logger.error(f"切换模型失败: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'切换模型失败: {e}'
+        }), 500
+
+
+@app.route('/api/model/info', methods=['GET'])
+def get_model_info():
+    """获取当前模型信息"""
+    try:
+        model_info = tts_service.get_current_model_info()
+        return jsonify({
+            'success': True,
+            'model_info': model_info
+        })
+    except Exception as e:
+        logger.error(f"获取模型信息失败: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'获取模型信息失败: {e}'
+        }), 500
+
+
 @app.route('/api/voices', methods=['GET'])
 def get_voices():
     """获取可用的英文音色列表"""

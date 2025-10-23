@@ -1,0 +1,59 @@
+{
+  "models": {
+    "sambert-zhichu-v1": {
+      "name": "sambert-zhichu-v1",
+      "display_name": "Sambert 知初",
+      "description": "阿里云Sambert模型，中文语音合成",
+      "price_per_10k_chars": 0.1,
+      "max_text_length": 600,
+      "voices": {
+        "zhichu": "知初音色",
+        "zhijiang": "知江音色",
+        "zhimeng": "知梦音色",
+        "zhixia": "知夏音色",
+        "zhixuan": "知萱音色",
+        "zhiyan": "知燕音色",
+        "zhiya": "知雅音色",
+        "zhiyu": "知语音色"
+      },
+      "default_voice": "zhichu",
+      "supported_formats": ["wav", "mp3"],
+      "default_format": "wav",
+      "supported_sample_rates": [16000, 22050, 44100],
+      "default_sample_rate": 22050,
+      "api_parameters": {
+        "model": "sambert-zhichu-v1",
+        "format": "wav",
+        "sample_rate": 22050
+      }
+    },
+    "cosyvoice-v3": {
+      "name": "cosyvoice-v3",
+      "display_name": "CosyVoice v3",
+      "description": "阿里云CosyVoice v3模型，高质量英文语音合成",
+      "price_per_10k_chars": 0.4,
+      "max_text_length": 2000,
+      "voices": {
+        "longjielidou": "英文场景音色",
+        "longxiaochun": "龙小春音色",
+        "loongstella": "龙斯特拉音色",
+        "longyue": "龙月音色",
+        "longshuo": "龙烁音色",
+        "longfei": "龙飞音色",
+        "longxiaobai": "龙小白音色",
+        "longlaotie": "龙老铁音色"
+      },
+      "default_voice": "longjielidou",
+      "supported_formats": ["wav", "mp3"],
+      "default_format": "wav",
+      "supported_sample_rates": [16000, 22050, 44100],
+      "default_sample_rate": 22050,
+      "api_parameters": {
+        "model": "cosyvoice-v3",
+        "format": "wav",
+        "sample_rate": 22050
+      }
+    }
+  },
+  "current_model": "sambert-zhichu-v1"
+}
